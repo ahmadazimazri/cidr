@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIDR Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>CIDR Calculator</h1>
+
+    <div class="container info-box">
+        <h2>IPv4 Class Information</h2>
+        <p><strong>Class A:</strong> 1.0.0.0 to 126.255.255.255 (Default Mask: 255.0.0.0 or /8)</p>
+        <p><strong>Class B:</strong> 128.0.0.0 to 191.255.255.255 (Default Mask: 255.255.0.0 or /16)</p>
+        <p><strong>Class C:</strong> 192.0.0.0 to 223.255.255.255 (Default Mask: 255.255.255.0 or /24)</p>
+        <p><em>Note: Classful addressing is largely historical. CIDR provides more flexibility. 127.x.x.x is reserved for loopback.</em></p>
+    </div>
+
+    <div class="container calculator-box">
+        <h2>Calculate CIDR Range</h2>
+        <label for="cidrInput">Enter CIDR (e.g., 192.168.1.0/24):</label>
+        <input type="text" id="cidrInput" placeholder="e.g., 10.0.0.0/16">
+        <button id="calculateButton">Calculate</button>
+
+        <div id="results" class="results-box" style="display: none;">
+            <h3>Results:</h3>
+            <p><strong>CIDR Notation:</strong> <span id="resultCidr"></span></p>
+            <p><strong>Network Address:</strong> <span id="networkAddress"></span></p>
+            <p><strong>Subnet Mask:</strong> <span id="subnetMask"></span></p>
+            <p><strong>First Usable Host:</strong> <span id="firstHost"></span></p>
+            <p><strong>Last Usable Host:</strong> <span id="lastHost"></span></p>
+            <p><strong>Broadcast Address:</strong> <span id="broadcastAddress"></span></p>
+            <p><strong>Total Addresses:</strong> <span id="totalAddresses"></span></p>
+            <p><strong>Usable Host Addresses:</strong> <span id="usableHosts"></span></p>
+        </div>
+         <div id="errorDisplay" class="error-box" style="display: none; color: red; margin-top: 10px;"></div>
+    </div>
+
+    <footer>
+        <p>Created for GitHub Pages</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
