@@ -5,64 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIDR Calculator</title>
     <style>
+        /* --- Updated Styles for Black Background --- */
         body {
             font-family: sans-serif;
             line-height: 1.6;
-            margin: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            margin: 0; /* Removed default margin */
+            padding: 20px;
+            background-color: #000000; /* Black background */
+            color: #e0e0e0; /* Light gray text */
         }
 
         .container {
-            background-color: #fff;
+            /* Slightly darker container background for contrast */
+            background-color: #1a1a1a;
             padding: 20px;
+            margin: 20px auto; /* Center container */
             margin-bottom: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; /* Increased radius */
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Subtle blue shadow */
+            border: 1px solid #444; /* Dark border */
+            max-width: 700px; /* Slightly wider */
         }
 
         h1, h2, h3, h4 {
-            color: #0056b3;
+            color: #64b5f6; /* Lighter blue for headings */
+            border-bottom: 1px solid #444; /* Separator line */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 30px;
+            border-bottom: none; /* Remove double border */
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px; /* Increased spacing */
             font-weight: bold;
+            color: #c0c0c0; /* Lighter label text */
         }
 
         input[type="text"] {
-            width: 100%; /* Let container control width */
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: 100%;
+            padding: 12px; /* Increased padding */
+            margin-bottom: 20px; /* Increased spacing */
+            border: 1px solid #555; /* Gray border */
+            border-radius: 6px; /* Increased radius */
             box-sizing: border-box;
+            background-color: #333; /* Dark input background */
+            color: #e0e0e0; /* Light text in input */
+            font-size: 1em;
         }
+        input[type="text"]::placeholder {
+            color: #888; /* Lighter placeholder */
+        }
+
 
         button {
             display: inline-block;
-            background-color: #0056b3;
+            background-color: #007bff; /* Standard blue */
             color: white;
-            padding: 10px 20px;
+            padding: 12px 25px; /* Increased padding */
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.05em; /* Slightly larger font */
+            transition: background-color 0.3s ease, transform 0.1s ease;
         }
 
         button:hover {
-            background-color: #004494;
+            background-color: #0056b3; /* Darker blue */
+        }
+        button:active {
+            transform: scale(0.98); /* Press effect */
         }
 
         .info-box {
-            background-color: #e7f3fe;
-            border-left: 5px solid #0056b3;
+            /* Darker blue info box */
+            background-color: #1c2a3a;
+            border-left: 5px solid #64b5f6; /* Lighter blue border */
+            color: #c0c0c0; /* Lighter text */
         }
         .info-box ul {
             list-style-type: none;
@@ -70,6 +94,9 @@
         }
         .info-box li {
             margin-bottom: 8px;
+        }
+        .info-box strong {
+             color: #e0e0e0; /* Brighter strong text */
         }
 
         /* Layout container for results and GCP info */
@@ -84,38 +111,55 @@
         /* Styling for the results box */
         .results-box {
             padding: 15px;
-            background-color: #e9ecef;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
+            background-color: #2a2a2a; /* Dark gray results box */
+            border: 1px solid #444; /* Dark border */
+            border-radius: 6px;
             flex: 1 1 55%;
             min-width: 280px;
             box-sizing: border-box;
         }
-
-        .results-box p {
-            margin: 8px 0;
-            word-wrap: break-word;
+        .results-box h3 {
+             margin-top: 0;
+             color: #64b5f6; /* Match heading color */
         }
 
-        .results-box span, .gcp-info-box span, .warning-box span { /* Apply monospace to warning spans too */
+        .results-box p {
+            margin: 10px 0; /* Increased spacing */
+            word-wrap: break-word;
+            color: #c0c0c0; /* Lighter text */
+        }
+        .results-box strong {
+             color: #d0d0d0;
+        }
+
+        /* Adjusted span styling for dark mode */
+        .results-box span, .gcp-info-box span, .message-box span {
             font-weight: bold;
             font-family: monospace;
-            background-color: #fff;
-            padding: 2px 4px;
-            border-radius: 3px;
+            background-color: #444; /* Darker background for spans */
+            color: #f0f0f0; /* Light text */
+            padding: 3px 6px; /* Adjusted padding */
+            border-radius: 4px;
             display: inline-block;
+            border: 1px solid #555; /* Subtle border */
         }
 
         /* Styling for the GCP info box */
         .gcp-info-box {
             padding: 15px;
-            background-color: #fff3e0;
-            border-left: 5px solid #ff9800;
-            border-radius: 4px;
+            background-color: #3a2d1c; /* Dark orange/brown */
+            border-left: 5px solid #ff9800; /* Keep orange border */
+            border-radius: 6px;
             font-size: 0.95em;
             flex: 1 1 35%;
             min-width: 250px;
             box-sizing: border-box;
+            color: #c0c0c0;
+        }
+        .gcp-info-box h4 {
+             margin-top: 0;
+             color: #ffb74d; /* Lighter orange heading */
+             border-bottom-color: #665233; /* Darker border */
         }
 
         .gcp-info-box ul {
@@ -127,34 +171,46 @@
         .gcp-info-box li {
             margin-bottom: 8px;
         }
+        .gcp-info-box strong {
+             color: #d0d0d0;
+        }
+
+        /* Base style for message boxes (error, warning, valid) */
+        .message-box {
+            margin-top: 15px;
+            padding: 12px 15px; /* Increased padding */
+            border-radius: 6px;
+            border-width: 1px;
+            border-style: solid;
+            border-left-width: 5px; /* Keep thick left border */
+            font-weight: 500; /* Slightly bolder text */
+        }
 
         /* Styling for the error box */
         .error-box {
-            margin-top: 15px;
-            padding: 10px;
-            background-color: #f8d7da; /* Red background */
-            color: #721c24; /* Dark red text */
-            border: 1px solid #f5c6cb;
-            border-radius: 4px;
+            background-color: #4a1a1a; /* Dark red background */
+            color: #f8d7da; /* Light red text */
+            border-color: #f5c6cb; /* Light red border */
+            border-left-color: #dc3545; /* Stronger red left border */
         }
 
-        /* NEW: Styling for the warning box */
+        /* Styling for the warning box */
         .warning-box {
-             margin-top: 15px;
-             padding: 10px;
-             background-color: #fff8e1; /* Yellow background */
-             color: #856404; /* Dark yellow/brown text */
-             border: 1px solid #ffecb3;
-             border-left: 5px solid #ffc107; /* Yellow border */
-             border-radius: 4px;
+             background-color: #4d421a; /* Dark yellow background */
+             color: #fff3cd; /* Light yellow text */
+             border-color: #ffeeba; /* Light yellow border */
+             border-left-color: #ffc107; /* Stronger yellow left border */
         }
 
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #666;
+        /* NEW: Styling for the valid input box */
+        .valid-input-box {
+             background-color: #1a4a2a; /* Dark green background */
+             color: #d4edda; /* Light green text */
+             border-color: #c3e6cb; /* Light green border */
+             border-left-color: #28a745; /* Stronger green left border */
         }
+
+        /* Footer style removed */
 
     </style>
      </head>
@@ -178,12 +234,12 @@
     <div class="container calculator-box">
         <h2>Calculate CIDR Range</h2>
         <label for="cidrInput">Enter CIDR (e.g., 192.168.1.0/24):</label>
-        <input type="text" id="cidrInput" placeholder="e.g., 10.0.0.0/16">
+        <input type="text" id="cidrInput" placeholder="e.g., 10.0.0.0/16" value="192.168.1.0/24">
         <button id="calculateButton">Calculate</button>
 
-        <div id="warningDisplay" class="warning-box" style="display: none;"></div>
+        <div id="messageDisplay" class="message-box" style="display: none;"></div>
 
-        <div id="errorDisplay" class="error-box" style="display: none;"></div>
+        <div id="errorDisplay" class="message-box error-box" style="display: none;"></div>
 
         <div class="results-layout">
             <div id="results" class="results-box" style="display: none;">
@@ -208,20 +264,16 @@
                      <li><strong>Broadcast address:</strong> <span id="gcpBroadcastAddr">N/A</span></li>
                  </ul>
                  <p style="font-size: 0.9em; margin-top: 10px;">These four addresses are reserved by GCP in the primary IP range and are unavailable for VMs.</p>
-                 <p id="gcpNoteSmallSubnet" style="font-size: 0.9em; margin-top: 10px; display: none; color: #555;">(Note: For /31 and /32 subnets, this standard reservation pattern doesn't apply)</p>
+                 <p id="gcpNoteSmallSubnet" style="font-size: 0.9em; margin-top: 10px; display: none;">(Note: For /31 and /32 subnets, this standard reservation pattern doesn't apply)</p>
             </div>
         </div>
 
-    </div><footer>
-        <p>Created for GitHub Pages</p>
-    </footer>
-
+    </div>
     <script>
         // Add event listener to the calculate button
         document.getElementById('calculateButton').addEventListener('click', calculateCidr);
         // Add event listener to the input field for Enter key press
         document.getElementById('cidrInput').addEventListener('keypress', function(event) {
-            // Allow calculation on Enter key press
             if (event.key === 'Enter') {
                 calculateCidr();
             }
@@ -234,23 +286,19 @@
             const cidrInput = document.getElementById('cidrInput').value.trim();
             const resultsDiv = document.getElementById('results');
             const errorDiv = document.getElementById('errorDisplay');
-            const warningDiv = document.getElementById('warningDisplay'); // Get warning div
+            const messageDiv = document.getElementById('messageDisplay'); // Unified message display
             const gcpInfoDiv = document.getElementById('gcpInfo');
             const gcpNoteSmallSubnet = document.getElementById('gcpNoteSmallSubnet');
 
-            // Clear previous results, errors, and warnings
+            // Clear previous results and messages
             resultsDiv.style.display = 'none';
             gcpInfoDiv.style.display = 'none';
             gcpNoteSmallSubnet.style.display = 'none';
             errorDiv.style.display = 'none';
             errorDiv.textContent = '';
-            warningDiv.style.display = 'none'; // Hide warning div
-            warningDiv.textContent = '';      // Clear warning text
-            // Reset GCP fields
-            document.getElementById('gcpNetworkAddr').textContent = 'N/A';
-            document.getElementById('gcpGatewayAddr').textContent = 'N/A';
-            document.getElementById('gcpSecondLastAddr').textContent = 'N/A';
-            document.getElementById('gcpBroadcastAddr').textContent = 'N/A';
+            messageDiv.style.display = 'none';
+            messageDiv.textContent = '';
+            messageDiv.className = 'message-box'; // Reset class
 
 
             // --- Input Validation ---
@@ -259,45 +307,50 @@
 
             if (!match) {
                 showError("Invalid CIDR format. Use format: xxx.xxx.xxx.xxx/yy");
-                return; // Stop on fatal error
+                return;
             }
 
-            const ipStr = match[1]; // Input IP string
+            const ipStr = match[1];
             const prefix = parseInt(match[2], 10);
 
             if (prefix < 0 || prefix > 32) {
                 showError("Invalid prefix length. Must be between 0 and 32.");
-                return; // Stop on fatal error
+                return;
             }
 
             const ipParts = ipStr.split('.').map(part => parseInt(part, 10));
             if (ipParts.length !== 4 || ipParts.some(part => isNaN(part) || part < 0 || part > 255)) {
                 showError("Invalid IP address part. Octets must be between 0 and 255.");
-                return; // Stop on fatal error
+                return;
             }
 
             // --- Calculations ---
             try {
-                const ipInt = ipToInt(ipStr); // Integer of the input IP
+                // FIX: Ensure ipInt is treated as unsigned for comparison
+                const ipInt = ipToInt(ipStr) >>> 0;
                 const maskInt = prefix === 0 ? 0 : (0xFFFFFFFF << (32 - prefix)) & 0xFFFFFFFF;
                 const subnetMask = intToIp(maskInt);
-
-                // Calculate the *actual* network address based on input IP and prefix
+                // NetworkInt is already unsigned due to >>> 0
                 const networkInt = (ipInt & maskInt) >>> 0;
-                const networkAddress = intToIp(networkInt); // String of the calculated network address
+                const networkAddress = intToIp(networkInt);
 
-                // --- NEW: Check if input IP matches calculated Network Address ---
+                // --- Check if input IP matches calculated Network Address ---
+                // Now comparing potentially unsigned integers
                 if (ipInt !== networkInt) {
+                    // Show Yellow Warning
                     const suggestedCidr = `${networkAddress}/${prefix}`;
-                    // Use innerHTML to allow span tags for monospace formatting
-                    warningDiv.innerHTML = `Warning: Input IP (<span>${ipStr}</span>) is not the network address for /${prefix}. Displaying results for the correct network: <span>${suggestedCidr}</span>.`;
-                    warningDiv.style.display = 'block'; // Show the warning
-                    // Do NOT return; proceed with calculation using the correct networkAddress
+                    messageDiv.innerHTML = `⚠️ Warning: Input IP (<span>${ipStr}</span>) is not the network address for /${prefix}. Displaying results for the correct network: <span>${suggestedCidr}</span>.`;
+                    messageDiv.className = 'message-box warning-box'; // Apply warning style
+                    messageDiv.style.display = 'block';
+                } else {
+                    // Show Green Confirmation
+                    messageDiv.innerHTML = `✅ Valid Network Address Input!`;
+                    messageDiv.className = 'message-box valid-input-box'; // Apply valid style
+                    messageDiv.style.display = 'block';
                 }
-                // --- End NEW Check ---
+                // --- End Check ---
 
 
-                // Continue calculations using the *calculated* networkInt/networkAddress
                 const broadcastInt = (networkInt | (~maskInt & 0xFFFFFFFF)) >>> 0;
                 const broadcastAddress = intToIp(broadcastInt);
                 const totalAddresses = Math.pow(2, 32 - prefix);
@@ -305,11 +358,7 @@
                 let usableHosts = 0;
                 if (prefix <= 30) {
                      usableHosts = totalAddresses - 2;
-                } else if (prefix === 31) {
-                    usableHosts = 0;
-                } else { // prefix === 32
-                    usableHosts = 0;
-                }
+                } // /31 and /32 handled below
 
                 let firstHost = "N/A";
                 let lastHost = "N/A";
@@ -321,8 +370,8 @@
                     const lastHostInt = broadcastInt - 1;
                     firstHost = intToIp(firstHostInt);
                     lastHost = intToIp(lastHostInt);
-                    gatewayAddress = intToIp(networkInt + 1); // Gateway is Network+1
-                    secondLastAddress = intToIp(broadcastInt - 1); // Second-last is Broadcast-1
+                    gatewayAddress = intToIp(networkInt + 1);
+                    secondLastAddress = intToIp(broadcastInt - 1);
                 } else if (prefix === 31) {
                      firstHost = networkAddress;
                      lastHost = broadcastAddress;
@@ -338,7 +387,6 @@
                 }
 
                 // --- Display Results ---
-                // Display results based on the *calculated* network address
                 document.getElementById('resultCidr').textContent = `${networkAddress}/${prefix}`;
                 document.getElementById('networkAddress').textContent = networkAddress;
                 document.getElementById('subnetMask').textContent = subnetMask;
@@ -360,7 +408,7 @@
 
             } catch (e) {
                 console.error("Calculation error:", e);
-                showError("An error occurred during calculation."); // Show fatal error
+                showError("An error occurred during calculation.");
             }
         }
 
@@ -369,24 +417,24 @@
          */
         function showError(message) {
             const errorDiv = document.getElementById('errorDisplay');
-            const warningDiv = document.getElementById('warningDisplay'); // Get warning div
+            const messageDiv = document.getElementById('messageDisplay');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
-            // Hide results, GCP info, and any warnings if a fatal error occurs
+            // Hide results, GCP info, and general messages if a fatal error occurs
             document.getElementById('results').style.display = 'none';
             document.getElementById('gcpInfo').style.display = 'none';
-            warningDiv.style.display = 'none'; // Hide warnings on fatal error
+            messageDiv.style.display = 'none';
         }
 
         // --- Helper Functions ---
-
-        /** Converts IP string to integer */
         function ipToInt(ipStr) {
+            // Converts "192.168.1.1" to a 32-bit integer
             return ipStr.split('.').reduce((res, octet) => (res << 8) | parseInt(octet, 10), 0);
         }
 
-        /** Converts integer to IP string */
         function intToIp(ipInt) {
+            // Converts a 32-bit integer back to "192.168.1.1" format
+            // Use unsigned right shift (>>>) to handle potential negative representation of large IPs
             return [
                 (ipInt >>> 24) & 255,
                 (ipInt >>> 16) & 255,
